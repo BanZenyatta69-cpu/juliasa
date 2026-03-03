@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lo siento, mi vida 🤍</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf8f4;
+    --blush: #f5c6c6;
+    --rose: #c4687a;
+    --deep: #6e2a3e;
+    --warm: #faeee6;
+    --text: #3a1e2a;
+    --muted: #9c7280;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--text); font-family: 'Lato', sans-serif; overflow-x: hidden; cursor: none; }
+
+  .cursor { width: 8px; height: 8px; background: var(--rose); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+  .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--blush); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all 0.15s ease; }
+
+  .petal { position: fixed; pointer-events: none; z-index: 0; animation: petalFall linear infinite; opacity: 0; }
+  @keyframes petalFall {
+    0%   { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.35; }
+    100% { transform: translateY(105vh) rotate(380deg); opacity: 0; }
+  }
+
+  /* INTRO */
+  #intro { position: fixed; inset: 0; background: var(--deep); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 1.5s ease; overflow: hidden; }
+  #intro::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(196,104,122,0.35) 0%, transparent 60%), radial-gradient(ellipse at 75% 65%, rgba(245,198,198,0.1) 0%, transparent 50%); }
+  .intro-inner { position: relative; z-index: 2; text-align: center; padding: 0 32px; }
+  .intro-hearts { font-size: 2.5rem; letter-spacing: 10px; display: block; margin-bottom: 28px; animation: hb 1.8s ease infinite; }
+  @keyframes hb { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+  .intro-title { font-family: 'Cormorant Garamond', serif; color: white; font-size: clamp(1.6rem,6vw,2.8rem); font-weight: 300; line-height: 1.45; opacity: 0; animation: riseIn 1.2s ease 0.4s forwards; }
+  .intro-title em { font-style: italic; color: var(--blush); }
+  .intro-tap { margin-top: 40px; color: rgba(255,255,255,0.4); font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase; opacity: 0; animation: riseIn 1s ease 1.4s forwards, sp 2.5s ease 2.6s infinite; }
+  @keyframes riseIn { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes sp { 0%,100%{opacity:0.4;} 50%{opacity:0.15;} }
+  #intro.out { opacity: 0; pointer-events: none; }
+
+  section { position: relative; z-index: 2; }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 28px; background: linear-gradient(165deg,#fff5f0 0%,var(--cream) 50%,var(--warm) 100%); overflow: hidden; }
+  .hero::before { content:''; position: absolute; width:700px; height:700px; background: radial-gradient(circle,rgba(245,198,198,0.28) 0%,transparent 70%); top:-150px; left:50%; transform:translateX(-50%); pointer-events:none; }
+  .eyebrow { font-size:0.62rem; letter-spacing:5px; text-transform:uppercase; color:var(--rose); margin-bottom:18px; opacity:0; animation:riseIn 0.9s ease 0.2s forwards; }
+  .hero-h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,11vw,6.5rem); font-weight:300; line-height:1.05; color:var(--deep); opacity:0; animation:riseIn 1s ease 0.4s forwards; }
+  .hero-h1 em { font-style:italic; color:var(--rose); }
+  .hero-h1 .small { font-size:0.52em; display:block; font-weight:300; color:var(--muted); margin-top:10px; font-style:normal; }
+  .hero-sub { margin-top:30px; max-width:540px; font-size:1.05rem; line-height:1.9; color:var(--muted); font-weight:300; opacity:0; animation:riseIn 1s ease 0.7s forwards; }
+  .hero-sub strong { color:var(--deep); font-weight:400; }
+  .down { margin-top:60px; font-size:1.6rem; opacity:0; animation:riseIn 1s ease 1.1s forwards, bob 2s ease 2s infinite; color:var(--blush); }
+  @keyframes bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+
+  /* SORRY */
+  .sorry { padding:110px 28px; max-width:760px; margin:0 auto; text-align:center; }
+  .tag { font-size:0.62rem; letter-spacing:5px; text-transform:uppercase; color:var(--rose); display:block; margin-bottom:14px; }
+  .h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,6vw,3.8rem); font-weight:300; color:var(--deep); line-height:1.2; margin-bottom:36px; }
+  .h2 em { font-style:italic; color:var(--rose); }
+  .bt { font-size:1.05rem; line-height:2.1; color:var(--text); font-weight:300; margin-bottom:22px; }
+  .bt strong { color:var(--deep); font-weight:400; }
+  .bq { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,4vw,2.1rem); font-style:italic; color:var(--rose); margin:48px auto; max-width:580px; line-height:1.6; position:relative; padding:0 24px; }
+  .bq::before { content:'"'; font-size:5rem; color:var(--blush); position:absolute; top:-20px; left:-4px; font-style:normal; line-height:1; opacity:0.5; }
+  .dv { display:flex; align-items:center; gap:14px; max-width:260px; margin:50px auto; }
+  .dv::before, .dv::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,var(--blush),transparent); }
+  .dv span { color:var(--rose); }
+
+  /* EVERYTHING */
+  .everything { background:var(--deep); padding:110px 28px; text-align:center; overflow:hidden; position:relative; }
+  .everything::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 20% 50%,rgba(196,104,122,0.3) 0%,transparent 55%),radial-gradient(ellipse at 80% 50%,rgba(245,198,198,0.1) 0%,transparent 55%); }
+  .everything .tag { color:var(--blush); }
+  .everything .h2 { color:white; margin-bottom:60px; }
+  .everything .h2 em { color:var(--blush); }
+  .cgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; max-width:900px; margin:0 auto 70px; position:relative; z-index:2; }
+  .lc { background:rgba(255,255,255,0.06); border:1px solid rgba(245,198,198,0.18); border-radius:18px; padding:32px 28px; text-align:left; transition:transform 0.3s, background 0.3s; }
+  .lc:hover { transform:translateY(-6px); background:rgba(255,255,255,0.1); }
+  .lc .ico { font-size:1.8rem; display:block; margin-bottom:14px; }
+  .lc h3 { font-family:'Cormorant Garamond',serif; font-size:1.25rem; color:white; font-weight:400; margin-bottom:10px; font-style:italic; }
+  .lc p { font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.8; font-weight:300; }
+  .bc { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,7vw,4.5rem); font-weight:300; color:white; line-height:1.2; position:relative; z-index:2; max-width:700px; margin:0 auto; }
+  .bc em { color:var(--blush); font-style:italic; }
+
+  /* PHOTOS */
+  .photos { padding:100px 28px; background:var(--warm); }
+  .photos .h2 { text-align:center; margin-bottom:12px; }
+  .psub { text-align:center; color:var(--muted); font-size:0.78rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:56px; }
+  .pgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:28px; max-width:1000px; margin:0 auto; }
+  .pc { background:white; border-radius:20px; overflow:hidden; box-shadow:0 6px 30px rgba(110,42,62,0.09); transition:transform 0.35s, box-shadow 0.35s; }
+  .pc:hover { transform:translateY(-8px); box-shadow:0 16px 50px rgba(110,42,62,0.16); }
+  .pc img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; cursor:zoom-in; }
+  .pb { padding:22px 24px; }
+  .pn { font-size:0.58rem; letter-spacing:3px; color:var(--rose); text-transform:uppercase; margin-bottom:6px; display:block; }
+  .pb h3 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--deep); font-weight:400; line-height:1.3; margin-bottom:8px; }
+  .pb p { font-size:0.82rem; color:var(--muted); line-height:1.75; font-weight:300; }
+
+  /* PROMISES */
+  .promises { padding:110px 28px; max-width:700px; margin:0 auto; text-align:center; }
+  .pitems { margin:50px 0 0; display:flex; flex-direction:column; gap:18px; text-align:left; }
+  .pi { display:flex; align-items:flex-start; gap:18px; background:white; border:1px solid rgba(245,198,198,0.5); border-radius:16px; padding:22px 24px; box-shadow:0 3px 16px rgba(110,42,62,0.06); transition:transform 0.3s; }
+  .pi:hover { transform:translateX(6px); }
+  .pi .ico { font-size:1.4rem; flex-shrink:0; margin-top:2px; }
+  .pi p { font-size:0.95rem; line-height:1.8; color:var(--text); font-weight:300; }
+  .pi p strong { color:var(--deep); font-weight:500; }
+
+  /* LETTER */
+  .letter { background:linear-gradient(160deg,var(--deep) 0%,#3d1020 100%); padding:110px 28px; text-align:center; overflow:hidden; position:relative; }
+  .letter::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(196,104,122,0.25) 0%,transparent 60%); }
+  .lw { max-width:640px; margin:0 auto; background:rgba(255,255,255,0.05); border:1px solid rgba(245,198,198,0.2); border-radius:24px; padding:56px 52px; position:relative; z-index:2; }
+  .ll { font-size:0.62rem; letter-spacing:5px; color:var(--blush); text-transform:uppercase; display:block; margin-bottom:28px; }
+  .lt { font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,3vw,1.35rem); font-style:italic; color:rgba(255,255,255,0.9); line-height:2; font-weight:300; text-align:left; }
+  .lt .hl { color:var(--blush); }
+  .ls { margin-top:36px; text-align:right; font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--blush); font-style:italic; }
+
+  /* FINAL */
+  .final { padding:100px 28px 130px; text-align:center; background:var(--cream); overflow:hidden; position:relative; }
+  .final::before { content:''; position:absolute; width:500px; height:500px; background:radial-gradient(circle,rgba(245,198,198,0.22) 0%,transparent 70%); top:0; left:50%; transform:translateX(-50%); pointer-events:none; }
+  .fe { font-size:3.5rem; display:block; margin-bottom:24px; animation:hb 1.8s ease infinite; }
+  .fh { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,7vw,4rem); font-weight:300; color:var(--deep); line-height:1.25; margin-bottom:20px; max-width:600px; margin-left:auto; margin-right:auto; }
+  .fh em { font-style:italic; color:var(--rose); }
+  .fp { font-size:1rem; color:var(--muted); font-weight:300; font-style:italic; max-width:420px; margin:0 auto 48px; line-height:1.8; }
+  .fn { font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:var(--rose); font-style:italic; }
+  .fn span { font-size:0.85rem; color:var(--muted); font-style:normal; font-family:'Lato',sans-serif; display:block; margin-top:6px; letter-spacing:2px; }
+
+  /* AUDIO */
+  .audio-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(110,42,62,0.96);
+    backdrop-filter: blur(16px);
+    z-index: 500;
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 24px;
+    border-top: 1px solid rgba(245,198,198,0.15);
+    transform: translateY(100%);
+    transition: transform 0.6s ease;
+  }
+  .audio-bar.show { transform: translateY(0); }
+  .audio-play-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--rose);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: white; font-size: 1rem;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .audio-play-btn:hover { transform: scale(1.08); background: var(--deep); }
+  .audio-info { flex: 1; min-width: 0; }
+  .audio-title { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: white; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .audio-artist { font-size: 0.7rem; color: var(--blush); letter-spacing: 1px; }
+  .audio-progress { flex: 2; height: 3px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; cursor: pointer; }
+  .audio-prog-fill { height: 100%; background: var(--blush); width: 0%; transition: width 0.5s linear; border-radius: 3px; }
+  .audio-time { font-size: 0.68rem; color: rgba(255,255,255,0.45); white-space: nowrap; }
+
+  /* PIRATE */
+  .pirate-sec { padding: 100px 28px; background: var(--cream); }
+  .pirate-inner { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .pirate-img-wrap { position: relative; }
+  .pirate-img { width: 100%; border-radius: 24px; box-shadow: 0 12px 50px rgba(110,42,62,0.2); display: block; }
+  .pirate-badge { position: absolute; top: -16px; right: -16px; font-size: 3rem; animation: hb 2s ease infinite; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); }
+  .spotify-wrap { margin-top: 32px; }
+  .spotify-label { font-size: 0.78rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .spotify-btn { display: inline-flex; align-items: center; gap: 10px; background: #1DB954; color: white; text-decoration: none; padding: 14px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 400; letter-spacing: 0.5px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(29,185,84,0.3); }
+  .spotify-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(29,185,84,0.45); }
+  @media(max-width:680px){.pirate-inner{grid-template-columns:1fr;gap:36px;}}
+
+  /* LIGHTBOX */
+  .lb { display:none; position:fixed; inset:0; background:rgba(20,5,12,0.96); z-index:8000; align-items:center; justify-content:center; padding:20px; }
+  .lb.open { display:flex; }
+  .lb img { max-width:88vw; max-height:88vh; object-fit:contain; border-radius:10px; }
+  .lbx { position:fixed; top:18px; right:22px; color:rgba(255,255,255,0.7); font-size:1.8rem; cursor:pointer; background:none; border:none; transition:opacity 0.2s; }
+  .lbx:hover { color:white; }
+
+  .r { opacity:0; transform:translateY(28px); transition:opacity 0.9s ease, transform 0.9s ease; }
+  .r.on { opacity:1; transform:none; }
+
+  @media(max-width:600px){.lw{padding:36px 28px;}}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+<div id="petals"></div>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-inner">
+    <span class="intro-hearts">🤍 💕 🤍</span>
+    <p class="intro-title">
+      Julieta, eres la mujer<br>
+      más importante de mi vida.<br>
+      <em>Lo siento de todo corazón.</em>
+    </p>
+    <p class="intro-tap">toca para continuar</p>
+  </div>
+</div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="eyebrow">Para la mujer de mis sueños</p>
+    <h1 class="hero-h1">
+      <em>Lo siento,</em><br>
+      mi amor
+      <span class="small">y lo siento de verdad</span>
+    </h1>
+    <p class="hero-sub">
+      Hoy te fallé. <strong>Pero quiero que sepas algo que nunca cambia:</strong>
+      eres absolutamente todo para mí, y fallarte a ti es lo peor que me puede pasar.
+    </p>
+    <div class="down">🌸</div>
+  </section>
+
+  <!-- SORRY -->
+  <section class="sorry">
+    <span class="tag r">mis palabras para ti</span>
+    <h2 class="h2 r">Perdóname,<br><em>Julieta</em></h2>
+
+    <p class="bt r">
+      No hay forma de justificar haberte tratado seco y feo. Ninguna.
+      Tú eres la persona que más cuido en este mundo, la que más me importa en la vida,
+      <strong>y hoy te fallé.</strong> Y me duele.
+    </p>
+
+    <p class="bt r">
+      Sé que cuando alguien que amas te habla con frialdad, duele diferente.
+      Duele más profundo. Y me duele saber que hoy fui yo quien te hizo sentir eso.
+      No lo mereces. Nunca lo has merecido. Eres demasiado bonita por dentro y por fuera para recibir eso de mi parte.
+    </p>
+
+    <p class="bt r">
+      Cada vez que pienso en ti se me dibuja una sonrisa.
+      Eres la persona que más me alegra el día con solo existir.
+      <strong>¿Cómo pude tratarte así?</strong> No lo entiendo, y me arrepiento con todo lo que soy.
+    </p>
+
+    <div class="bq r">
+      Eres la mujer de mis sueños, Juli.
+      Y eso nunca cambia, incluso cuando me equivoco.
+    </div>
+
+    <div class="dv r"><span>🌷</span></div>
+  </section>
+
+  <!-- YOU ARE EVERYTHING -->
+  <section class="everything">
+    <span class="tag r">lo que siento de verdad</span>
+    <h2 class="h2 r">Eres absolutamente<br><em>todo</em> para mí</h2>
+
+    <div class="cgrid">
+      <div class="lc r">
+        <span class="ico">🌙</span>
+        <h3>Eres mi persona favorita</h3>
+        <p>De todas las personas en el mundo, tú eres con quien más quiero estar. En cada momento, en cada lugar, siempre tú.</p>
+      </div>
+      <div class="lc r">
+        <span class="ico">💫</span>
+        <h3>Me cambias el día</h3>
+        <p>Un mensaje tuyo, tu voz, tu foto... y ya mi día es completamente diferente. Mejor. Siempre mejor contigo.</p>
+      </div>
+      <div class="lc r">
+        <span class="ico">🌸</span>
+        <h3>Tu felicidad es lo más importante</h3>
+        <p>Verte contenta, verte reír, saber que estás bien... eso es lo que más quiero en la vida. Todos los días.</p>
+      </div>
+      <div class="lc r">
+        <span class="ico">🤍</span>
+        <h3>Eres la más hermosa</h3>
+        <p>No solo por fuera, aunque eres la mujer más hermosa que he visto en mi vida. Sino por todo lo que eres por dentro.</p>
+      </div>
+      <div class="lc r">
+        <span class="ico">💌</span>
+        <h3>Tu carta es mi tesoro más grande</h3>
+        <p>Nadie me ha dado algo tan bonito en la vida. La guardo como lo más valioso que tengo. Porque viene de ti.</p>
+      </div>
+      <div class="lc r">
+        <span class="ico">✨</span>
+        <h3>Soy mejor contigo</h3>
+        <p>Desde que estás en mi vida, todo tiene más color, más sentido, más alegría. Eres la mejor parte de mis días.</p>
+      </div>
+    </div>
+
+    <p class="bc r">
+      Tú no eres solo mi novia.<br>
+      Eres <em>la mujer de mis sueños</em><br>
+      hecha realidad.
+    </p>
+  </section>
+
+  <!-- PHOTOS -->
+  <section class="photos">
+    <h2 class="h2 r">Estos momentos me recuerdan<br>lo que tengo contigo</h2>
+    <p class="psub r">y por qué no puedo perderte</p>
+
+    <div class="pgrid">
+      <div class="pc r">
+        <img src="imgs/22.jpg" alt="Flores" loading="lazy">
+        <div class="pb">
+          <span class="pn">✦ para siempre</span>
+          <h3>Flores porque eres la mujer de mis sueños</h3>
+          <p>No necesité una razón especial. Solo quería que lo supieras. Lo eres todos los días.</p>
+        </div>
+      </div>
+      <div class="pc r">
+        <img src="imgs/19.jpg" alt="Cumple" loading="lazy">
+        <div class="pb">
+          <span class="pn">✦ para siempre</span>
+          <h3>La mujer más hermosa con sus flores de cumple</h3>
+          <p>Esa sonrisa sosteniendo esas flores... esa imagen la tengo tatuada en el pecho para siempre.</p>
+        </div>
+      </div>
+      <div class="pc r">
+        <img src="imgs/23.jpg" alt="Carta" loading="lazy">
+        <div class="pb">
+          <span class="pn">✦ para siempre</span>
+          <h3>La carta más bonita del mundo</h3>
+          <p>Me escribiste que ibas a velar siempre por sacarme una sonrisa. Hoy soy yo quien quiere hacerte sonreír a ti.</p>
+        </div>
+      </div>
+      <div class="pc r">
+        <img src="imgs/20.jpg" alt="Live" loading="lazy">
+        <div class="pb">
+          <span class="pn">✦ para siempre</span>
+          <h3>Nuestro primer live juntos</h3>
+          <p>Viendo al Guajiro sin saber que todo iba a ser tan lindo. Ya desde ahí eras especial para mí.</p>
+        </div>
+      </div>
+      <div class="pc r">
+        <img src="imgs/21.jpg" alt="Playlist" loading="lazy">
+        <div class="pb">
+          <span class="pn">✦ para siempre</span>
+          <h3>Nuestra primera playlist</h3>
+          <p>Una foca y un mono. Nuestros animales favoritos juntos. Igual que nosotros, hechos el uno para el otro.</p>
+        </div>
+      </div>
+      <div class="pc r">
+        <img src="imgs/1.jpg" alt="Momento" loading="lazy">
+        <div class="pb">
+          <span class="pn">✦ para siempre</span>
+          <h3>Desde el primer momento</h3>
+          <p>Desde antes de que fuéramos "nosotros" ya me tenías pensando en ti todo el tiempo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIRATE SECTION -->
+  <section class="pirate-sec">
+    <div class="pirate-inner">
+      <div class="pirate-img-wrap r">
+        <img src="imgs/pirata.jpg" alt="Mi pirata favorita" class="pirate-img">
+        <div class="pirate-badge">🏴‍☠️</div>
+      </div>
+      <div class="pirate-text r">
+        <span class="tag" style="text-align:left;display:block;">desde siempre</span>
+        <h2 class="h2" style="text-align:left;margin-bottom:20px;">Mi pirata favorita<br><em>del mundo</em></h2>
+        <p class="bt" style="text-align:left;">
+          Mira esta foto y dime que no eras ya la más linda del mundo.
+          Con tus colitas, tus botitas y ese carácter que todavía conservas 🥹
+          <br><br>
+          Desde niña ya eras especial. Y hoy eres mi pirata favorita,
+          la que robó mi corazón sin pedirme permiso y se lo quedó para siempre.
+        </p>
+        <div class="spotify-wrap r">
+          <p class="spotify-label">La playlist que hice para ti 🎵</p>
+          <a href="https://open.spotify.com/playlist/0WtrVYCw5vFd4aN5rLjtOf?si=q2WNvmlHT6ux9It5RjBdnw" target="_blank" class="spotify-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Escuchar playlist juntos
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMISES -->
+  <section class="promises">
+    <span class="tag r">lo que te juro</span>
+    <h2 class="h2 r">Mis promesas<br>para <em>ti</em></h2>
+    <p class="bt r" style="max-width:560px;margin:0 auto;">No son palabras para que se pase. Son promesas reales, de alguien que te quiere de verdad con todo lo que tiene.</p>
+    <div class="pitems">
+      <div class="pi r"><span class="ico">🌹</span><p><strong>Nunca más tratarte con frialdad.</strong> No mereces ni un segundo de sequedad de mi parte. Eres demasiado valiosa para eso.</p></div>
+      <div class="pi r"><span class="ico">💬</span><p><strong>Cuidar cada palabra que te digo.</strong> Porque sé que mis palabras te importan, y quiero que siempre sean palabras bonitas para ti.</p></div>
+      <div class="pi r"><span class="ico">🌙</span><p><strong>Recordar todos los días lo afortunado que soy.</strong> No hay un solo día en que no debería agradecerte que estés en mi vida.</p></div>
+      <div class="pi r"><span class="ico">✨</span><p><strong>Ser el Sebas que mereces.</strong> El que te trata con el amor y el cuidado que tú le das a todo lo que haces.</p></div>
+      <div class="pi r"><span class="ico">💕</span><p><strong>Hacerte sentir siempre lo más importante.</strong> Porque lo eres. Eres lo más importante que tengo en la vida. Sin discusión.</p></div>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section class="letter">
+    <div class="lw r">
+      <span class="ll">desde el fondo de mi corazón</span>
+      <p class="lt">
+        Juli, tú escribiste en tu carta que no querías correr, que querías seguir paso a paso
+        descubriéndonos sin miedo. Yo quiero exactamente lo mismo contigo.
+        <br><br>
+        Pero hoy me equivoqué. <span class="hl">Y me duele, porque tú eres la persona que más cuido en este mundo.</span>
+        La que me escribe cartas que guardo como el tesoro más grande que tengo.
+        La que me regala playlists con una foca y un mono porque nos conoce de verdad.
+        La que aparece con esa sonrisa que me cambia el día con solo verla.
+        <br><br>
+        <span class="hl">Eres la mujer más hermosa que he conocido. Por fuera y por dentro.</span>
+        Y soy el más afortunado del mundo de tenerte a mi lado.
+        <br><br>
+        Hoy fallé. Pero lo que siento por ti no falla.
+        <span class="hl">Te quiero, Julieta. Con todo lo que soy.</span>
+      </p>
+      <p class="ls">— Tu Sebas 🤍</p>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="final">
+    <span class="fe">💕</span>
+    <h2 class="fh r">Eres la mujer<br>de <em>mis sueños</em>,<br>Juli</h2>
+    <p class="fp r">Y eso no cambia. Ni hoy, ni nunca.<br>Eres todo lo que soñé y mucho más.</p>
+    <div class="fn r">Julieta 🤍 <span>la mujer de mi vida</span></div>
+  </section>
+
+</main>
+
+<div class="lb" id="lb"><button class="lbx" id="lbx">✕</button><img id="lbi" src="" alt=""></div>
+
+<!-- AUDIO BAR -->
+<div class="audio-bar" id="audioBar">
+  <button class="audio-play-btn" id="playBtn">▶</button>
+  <div class="audio-info">
+    <div class="audio-title">Eres Mi Sueño</div>
+    <div class="audio-artist">Fonseca — para ti, Juli 🤍</div>
+  </div>
+  <div class="audio-progress" id="audioProgress">
+    <div class="audio-prog-fill" id="progFill"></div>
+  </div>
+  <div class="audio-time" id="audioTime">0:00</div>
+</div>
+<audio id="bgAudio" src="sueno.mp3" loop>
+
+<script>
+const cur = document.getElementById('cur'), curR = document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;cur.style.left=mx+'px';cur.style.top=my+'px';curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+const emojis=['🌸','🌷','🌺','✿','💮'];
+for(let i=0;i<22;i++){const p=document.createElement('div');p.className='petal';p.textContent=emojis[i%emojis.length];p.style.cssText=`left:${Math.random()*100}vw;font-size:${10+Math.random()*12}px;animation-duration:${9+Math.random()*14}s;animation-delay:${Math.random()*12}s`;document.getElementById('petals').appendChild(p);}
+
+const intro=document.getElementById('intro');
+const dismiss=()=>intro.classList.add('out');
+intro.addEventListener('click',dismiss);
+setTimeout(dismiss,5500);
+
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:0.12});
+document.querySelectorAll('.r').forEach((el,i)=>{el.style.transitionDelay=(i%5*0.09)+'s';obs.observe(el);});
+
+const lb=document.getElementById('lb'),lbi=document.getElementById('lbi');
+document.querySelectorAll('.pc img').forEach(img=>{img.addEventListener('click',()=>{lbi.src=img.src;lb.classList.add('open');});});
+document.getElementById('lbx').onclick=()=>lb.classList.remove('open');
+lb.onclick=e=>{if(e.target===lb)lb.classList.remove('open');};
+
+// Audio
+const audio=document.getElementById('bgAudio');
+const bar=document.getElementById('audioBar');
+const playBtn=document.getElementById('playBtn');
+const progFill=document.getElementById('progFill');
+const audioTime=document.getElementById('audioTime');
+let started=false;
+function fmt(s){const m=Math.floor(s/60);return m+':'+(Math.floor(s%60)+'').padStart(2,'0');}
+playBtn.addEventListener('click',()=>{
+  if(audio.paused){audio.play();playBtn.textContent='⏸';}
+  else{audio.pause();playBtn.textContent='▶';}
+});
+audio.addEventListener('timeupdate',()=>{
+  if(audio.duration){progFill.style.width=(audio.currentTime/audio.duration*100)+'%';audioTime.textContent=fmt(audio.currentTime);}
+});
+document.addEventListener('click',()=>{
+  if(!started){started=true;audio.play().then(()=>{bar.classList.add('show');playBtn.textContent='⏸';}).catch(()=>{bar.classList.add('show');});}
+},{once:true});
+</script>
+</body>
+</html>
